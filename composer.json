@@ -1,0 +1,16 @@
+{
+    "name": "frosh/share-basket",
+    "keywords": ["basket", "checkout", "shopware", "shopware-plugin"],
+    "description": "Shopware Plugin to share your basket",
+    "license": "MIT",
+    "type": "shopware-plugin",
+    "extra": {
+        "installer-name": "FroshShareBasket"
+    },
+    "require": {
+        "composer/installers": "~1.0"
+    },
+    "scripts": {
+        "test": "phpunit -c tests"
+    }
+}

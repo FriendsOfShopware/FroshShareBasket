@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<plugin xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../engine/Shopware/Components/Plugin/schema/plugin.xsd">
+    <label lang="de">Warenkorb teilen</label>
+    <label lang="en">Share basket</label>
+
+    <version>1.0.0</version>
+    <copyright>Friends of Shopware</copyright>
+    <license>MIT</license>
+    <link>https://friendsofshopware.github.io/</link>
+    <author>Friends of Shopware</author>
+    <compatibility minVersion="5.5.0" />
+
+    <changelog version="1.0.0">
+        <changes lang="de">Erstveröffentlichung</changes>
+        <changes lang="en">First release</changes>
+    </changelog>
+
+    <description>
+        <![CDATA[
+            Shopware Plugin to share your basket. Also stores product mode, coupons and selected fields from s_order_basket_attributes.
+        ]]>
+    </description>
+    <description lang="de">
+        <![CDATA[
+            Shopware Plugin, um Ihren Warenkorb zu teilen. Speichert zusätzlich den Artikelmodus, Gutscheine und selektierte Felder aus s_order_basket_attributes.
+        ]]>
+    </description>
+</plugin>

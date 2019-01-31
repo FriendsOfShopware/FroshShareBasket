@@ -1,0 +1,29 @@
+<?xml version="1.0" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+
+        <service class="Shopware\Components\Plugin\CachedConfigReader" id="frosh_share_basket.config" >
+            <factory service="shopware.plugin.cached_config_reader" method="getByPluginName"/>
+            <argument type="string">FroshShareBasket</argument>
+        </service>
+
+        <service class="FroshShareBasket\Subscriber\TemplateRegistration" id="frosh_share_basket.subscriber.template_registration">
+            <argument>%frosh_share_basket.plugin_dir%</argument>
+            <tag name="shopware.event_subscriber"/>
+        </service>
+
+        <service class="FroshShareBasket\Subscriber\Checkout" id="frosh_share_basket.subscriber.checkout">
+            <argument id="service_container" type="service"/>
+            <tag name="shopware.event_subscriber"/>
+        </service>
+
+        <service class="FroshShareBasket\Subscriber\CronJob" id="frosh_share_basket.subscriber.cron_job">
+            <argument id="service_container" type="service"/>
+            <argument id="frosh_share_basket.config" type="service"/>
+            <tag name="shopware.event_subscriber"/>
+        </service>
+
+    </services>
+</container>

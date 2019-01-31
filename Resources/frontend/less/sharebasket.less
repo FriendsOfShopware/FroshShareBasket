@@ -1,0 +1,37 @@
+.main--actions--sharebasket.left {
+    width: 100%;
+    .unitize(margin-bottom, 5);
+}
+
+.main--actions--sharebasket input {
+    width: 100%;
+    .unitize(margin-bottom, 5);
+}
+
+@media screen and (max-width: @phoneLandscapeViewportWidth) {
+    .main--actions--sharebasket.left {
+        width: 100%;
+    }
+}
+
+@media screen and (min-width: @tabletViewportWidth) {
+    .main--actions--sharebasket.left {
+        width: 50%;
+    }
+}
+
+.sharebasket--share--buttons .share-whatsapp {
+    background-color: #32B322;
+    background-image: linear-gradient(to bottom, #32B322 0%, #119609 100%);
+    color: #fff;
+}
+
+.sharebasket--share--buttons .share-facebook {
+    background-color: #4B6FBD;
+    background-image: linear-gradient(to bottom, #4B6FBD 0%, #3853A4 100%);
+    color: #fff;
+}
+
+.sharebasket--share--buttons .btn {
+    .unitize(margin-bottom, 5);
+}
