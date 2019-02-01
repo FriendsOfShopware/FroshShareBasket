@@ -3,23 +3,23 @@
 namespace FroshShareBasket\Subscriber;
 
 use Enlight\Event\SubscriberInterface;
-use Shopware\Components\DependencyInjection\Container as DIContainer;
+use Shopware\Components\Routing\Router;
 
 class Checkout implements SubscriberInterface
 {
     /**
-     * @var DIContainer
+     * @var Router
      */
-    private $container;
+    private $router;
 
     /**
      * Checkout constructor.
      *
-     * @param DIContainer $container
+     * @param Router $router
      */
-    public function __construct(DIContainer $container)
+    public function __construct(Router $router)
     {
-        $this->container = $container;
+        $this->router = $router;
     }
 
     /**
@@ -42,8 +42,7 @@ class Checkout implements SubscriberInterface
         if ($request->has('bID')) {
             $basketID = $request->getParam('bID');
 
-            $router = $this->container->get('router');
-            $sBasketUrl = $router->assemble([
+            $sBasketUrl = $this->router->assemble([
                 'controller' => 'sharebasket',
                 'action' => 'load',
                 'bID' => $basketID,

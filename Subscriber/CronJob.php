@@ -2,15 +2,15 @@
 
 namespace FroshShareBasket\Subscriber;
 
+use Doctrine\DBAL\Connection;
 use Enlight\Event\SubscriberInterface;
-use Shopware\Components\DependencyInjection\Container as DIContainer;
 
 class CronJob implements SubscriberInterface
 {
     /**
-     * @var DIContainer
+     * @var Connection
      */
-    private $container;
+    private $connection;
 
     /**
      * @var array
@@ -20,13 +20,11 @@ class CronJob implements SubscriberInterface
     /**
      * CronJob constructor.
      *
-     * @param DIContainer $container
-     * @param array       $pluginConfig
+     * @param Connection $connection
      */
-    public function __construct(DIContainer $container, array $pluginConfig)
+    public function __construct(Connection $connection)
     {
-        $this->container = $container;
-        $this->pluginConfig = $pluginConfig;
+        $this->connection = $connection;
     }
 
     /**
@@ -47,7 +45,7 @@ class CronJob implements SubscriberInterface
     public function cleanup(\Shopware_Components_Cron_CronJob $job)
     {
         /** @var \Doctrine\DBAL\Query\QueryBuilder $builder */
-        $builder = $this->container->get('dbal_connection')->createQueryBuilder();
+        $builder = $this->connection->createQueryBuilder();
         $result = $builder->delete('s_plugin_sharebasket_baskets')
             ->where('created < DATE_SUB(NOW(), INTERVAL :interval MONTH)')
             ->setParameter(':interval', $this->pluginConfig['interval'])
