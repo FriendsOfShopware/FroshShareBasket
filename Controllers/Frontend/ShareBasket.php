@@ -19,13 +19,16 @@ class Shopware_Controllers_Frontend_ShareBasket extends Enlight_Controller_Actio
      */
     public function loadAction()
     {
+        $request = $this->Request();
+        $basket = $this->getBasket($request->getParam('bID'));
+
+        if (empty($basket['id'])) {
+            $this->forward('cart', 'checkout', 'frontend', ['shareBasketState' => 'basketnotfound']);
+        }
+
         /** @var sBasket $basketModule */
         $basketModule = $this->container->get('modules')->Basket();
         $basketModule->sDeleteBasket();
-
-        $request = $this->Request();
-
-        $basket = $this->getBasket($request->getParam('bID'));
 
         $articles = unserialize($basket['articles']);
 
@@ -49,9 +52,7 @@ class Shopware_Controllers_Frontend_ShareBasket extends Enlight_Controller_Actio
             }
         }
 
-        $this->redirect(
-            ['controller' => 'checkout']
-        );
+        $this->forward('cart', 'checkout', 'frontend', ['shareBasketState' => 'basketloaded']);
     }
 
     /**

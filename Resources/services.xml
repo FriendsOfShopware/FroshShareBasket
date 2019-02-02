@@ -14,6 +14,10 @@
             <tag name="shopware.event_subscriber"/>
         </service>
 
+        <service class="FroshShareBasket\Subscriber\Checkout" id="frosh_share_basket.subscriber.checkout">
+            <tag name="shopware.event_subscriber"/>
+        </service>
+
         <service class="FroshShareBasket\Subscriber\CronJob" id="frosh_share_basket.subscriber.cron_job">
             <argument id="dbal_connection" type="service"/>
             <argument id="frosh_share_basket.config" type="service"/>

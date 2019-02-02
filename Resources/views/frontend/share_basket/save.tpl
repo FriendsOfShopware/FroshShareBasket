@@ -1,12 +1,7 @@
 {namespace name="frontend/share_basket/checkout/cart"}
 
 {block name='frontend_checkout_forsh_share_basket_save'}
-    <div class="alert is--success is--rounded">
-        <div class="alert--icon">
-            <i class="icon--element icon--check"></i>
-        </div>
-        <div class="alert--content">{s name="basketsaved"}{/s}</div>
-    </div>
+    {include file="frontend/_includes/messages.tpl" type="success" content="{s name=basketsaved}{/s}"}
     <input type="text" class="is--small" id="sharebasket" data-clipboard-target="#sharebasket" readonly
            value="{$shareBasketUrl}">
     <div class="frosh-share-basket--buttons">
