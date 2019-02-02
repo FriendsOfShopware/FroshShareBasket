@@ -21,10 +21,12 @@ class CronJob implements SubscriberInterface
      * CronJob constructor.
      *
      * @param Connection $connection
+     * @param array      $pluginConfig
      */
-    public function __construct(Connection $connection)
+    public function __construct(Connection $connection, array $pluginConfig)
     {
         $this->connection = $connection;
+        $this->pluginConfig = $pluginConfig;
     }
 
     /**
