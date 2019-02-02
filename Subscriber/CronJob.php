@@ -21,10 +21,12 @@ class CronJob implements SubscriberInterface
      * CronJob constructor.
      *
      * @param Connection $connection
+     * @param array      $pluginConfig
      */
-    public function __construct(Connection $connection)
+    public function __construct(Connection $connection, array $pluginConfig)
     {
         $this->connection = $connection;
+        $this->pluginConfig = $pluginConfig;
     }
 
     /**
@@ -40,17 +42,28 @@ class CronJob implements SubscriberInterface
     /**
      * @param \Shopware_Components_Cron_CronJob $job
      *
+     * @throws \Doctrine\DBAL\DBALException
+     *
      * @return string
      */
     public function cleanup(\Shopware_Components_Cron_CronJob $job)
     {
-        /** @var \Doctrine\DBAL\Query\QueryBuilder $builder */
-        $builder = $this->connection->createQueryBuilder();
-        $result = $builder->delete('s_plugin_sharebasket_baskets')
-            ->where('created < DATE_SUB(NOW(), INTERVAL :interval MONTH)')
-            ->setParameter(':interval', $this->pluginConfig['interval'])
-            ->execute();
+        $statement = $this->connection
+            ->prepare('DELETE 
+                  baskets, urls 
+              FROM
+                  s_plugin_sharebasket_baskets AS baskets 
+              LEFT JOIN 
+                  s_core_rewrite_urls AS urls ON (urls.org_path = concat(:path,baskets.basketID))
+              WHERE
+                  created < DATE_SUB(NOW(), INTERVAL :interval MONTH)
+        ');
 
-        return 'Deleted: ' . ($result ?: '0');
+        $path = 'sViewport=ShareBasket&sAction=load&bID=';
+        $statement->bindParam(':path', $path);
+        $statement->bindParam(':interval', $this->pluginConfig['interval']);
+        $statement->execute();
+
+        return 'Deleted: ' . ($statement->rowCount() ?: '0');
     }
 }
