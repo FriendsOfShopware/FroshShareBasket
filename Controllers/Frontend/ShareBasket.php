@@ -46,7 +46,7 @@ class Shopware_Controllers_Frontend_ShareBasket extends Enlight_Controller_Actio
                 $this->updateBasketMode($article['modus'], $insertId);
             }
 
-            foreach ($article->attributes as $attribute => $value) {
+            foreach ($article['attributes'] as $attribute => $value) {
                 if ($value !== null) {
                     $this->updateBasketPosition($insertId, $attribute, $value);
                 }
