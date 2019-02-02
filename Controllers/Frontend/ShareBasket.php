@@ -22,8 +22,9 @@ class Shopware_Controllers_Frontend_ShareBasket extends Enlight_Controller_Actio
         $request = $this->Request();
         $basket = $this->getBasket($request->getParam('bID'));
 
-        if (empty($basket['id'])) {
+        if (empty($basket)) {
             $this->forward('cart', 'checkout', 'frontend', ['shareBasketState' => 'basketnotfound']);
+            return;
         }
 
         /** @var sBasket $basketModule */

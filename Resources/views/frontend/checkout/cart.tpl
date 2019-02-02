@@ -18,3 +18,12 @@
     </div>
     {$smarty.block.parent}
 {/block}
+
+{block name='frontend_basket_basket_is_empty'}
+    {if $shareBasketState == 'basketnotfound'}
+        <div class="basket--info-messages">
+            {include file="frontend/_includes/messages.tpl" type="warning" content="{s name="basketnotfound"}{/s}"}
+        </div>
+    {/if}
+    {$smarty.block.parent}
+{/block}
