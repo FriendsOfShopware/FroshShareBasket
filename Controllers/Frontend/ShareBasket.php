@@ -88,13 +88,10 @@ class Shopware_Controllers_Frontend_ShareBasket extends Enlight_Controller_Actio
             $articles[] = $basketArticle;
         }
 
-        $basketId = $this->saveBasket(serialize($articles));
+        $shareBasketPath = $this->saveBasket(serialize($articles));
 
-        $shareBasketUrl = $this->get('router')->assemble([
-            'action' => 'load',
-            'controller' => 'sharebasket',
-            'bID' => $basketId,
-        ]);
+        $router = $this->container->get('router');
+        $shareBasketUrl = $router->assemble(['module' => 'frontend']) . $shareBasketPath;
 
         $this->View()->assign('shareBasketUrl', $shareBasketUrl);
     }
@@ -136,19 +133,44 @@ class Shopware_Controllers_Frontend_ShareBasket extends Enlight_Controller_Actio
             $basketId = $this->generateBasketId();
             $statement->bindParam(':basketID', $basketId);
             $statement->execute();
+            $shareBasketPath = $this->generateBasketUrl($basketId);
         } while (
             $statement->rowCount() === 0
         );
+
+        return $shareBasketPath;
+    }
+
+    /**
+     * @throws Exception
+     *
+     * @return string
+     */
+    public function generateBasketId()
+    {
+        $characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-_';
+        $basketId = '';
+        for ($i = 0; $i < 11; ++$i) {
+            $basketId .= $characters[random_int(0, 63)];
+        }
 
         return $basketId;
     }
 
     /**
+     * @param $basketId
+     *
      * @return string
      */
-    public function generateBasketId()
+    public function generateBasketUrl($basketId)
     {
-        return base_convert(microtime(false), 10, 36);
+        $path = 'loadBasket/' . $basketId;
+
+        /** @var \sRewriteTable $rewriteTableModule */
+        $rewriteTableModule = $this->container->get('modules')->sRewriteTable();
+        $rewriteTableModule->sInsertUrl('sViewport=ShareBasket&sAction=load&bID=' . $basketId, $path);
+
+        return $path;
     }
 
     /**
