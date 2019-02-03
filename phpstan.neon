@@ -1,0 +1,27 @@
+parameters:
+    level: 5
+
+    autoload_directories:
+        - %currentWorkingDirectory%/../../../var/cache
+        - %currentWorkingDirectory%/../../../engine/Library
+        - %currentWorkingDirectory%
+
+    autoload_files:
+        - %currentWorkingDirectory%/../../../autoload.php
+
+    paths:
+        - %currentWorkingDirectory%
+
+    excludes_analyse:
+        - %currentWorkingDirectory%/tests/Unit/bootstrap.php
+        - %currentWorkingDirectory%/tests/Unit/config.php
+        - %currentWorkingDirectory%/tests/Functional/config.php
+
+    ignoreErrors:
+        - '#apcu_#'
+        - '#ioncube_#'
+        - '#opcache_#'
+        - '#imagettftext#'
+        - '#class Redis#'
+
+    reportUnmatchedIgnoredErrors: false
