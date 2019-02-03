@@ -150,7 +150,7 @@ class Shopware_Controllers_Frontend_ShareBasket extends Enlight_Controller_Actio
                 ])
                 ->execute();
 
-            return $this->generateBasketUrl($basketId);
+            return $this->generateBasketUrl($basketId, false);
         }
 
         $statement = $this->container->get('dbal_connection')
@@ -188,16 +188,19 @@ class Shopware_Controllers_Frontend_ShareBasket extends Enlight_Controller_Actio
 
     /**
      * @param $basketId
+     * @param $insert
      *
      * @return string
      */
-    public function generateBasketUrl($basketId)
+    public function generateBasketUrl($basketId, $insert = true)
     {
         $path = 'loadBasket/' . $basketId;
 
-        /** @var \sRewriteTable $rewriteTableModule */
-        $rewriteTableModule = $this->container->get('modules')->sRewriteTable();
-        $rewriteTableModule->sInsertUrl('sViewport=ShareBasket&sAction=load&bID=' . $basketId, $path);
+        if ($insert) {
+            /** @var \sRewriteTable $rewriteTableModule */
+            $rewriteTableModule = $this->container->get('modules')->sRewriteTable();
+            $rewriteTableModule->sInsertUrl('sViewport=ShareBasket&sAction=load&bID=' . $basketId, $path);
+        }
 
         return $path;
     }
