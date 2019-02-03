@@ -10,7 +10,8 @@ use Shopware\Components\Model\ModelEntity;
  * @ORM\Entity
  * @ORM\Table(name="s_plugin_sharebasket_baskets",
  *     uniqueConstraints={
- *        @ORM\UniqueConstraint(columns={"basketID"})
+ *        @ORM\UniqueConstraint(columns={"basketID"}),
+ *        @ORM\UniqueConstraint(columns={"hash"})
  *    }
  * )
  */
@@ -43,6 +44,12 @@ class Basket extends ModelEntity
      * @ORM\Column(name="created", type="datetime", nullable=false)
      */
     protected $created;
+
+    /**
+     * @var string
+     * @ORM\Column(name="hash", type="string", nullable=false)
+     */
+    private $hash;
 
     /**
      * @return int
@@ -106,5 +113,21 @@ class Basket extends ModelEntity
     public function setCreated($created)
     {
         $this->created = $created;
+    }
+
+    /**
+     * @return string
+     */
+    public function getHash()
+    {
+        return $this->hash;
+    }
+
+    /**
+     * @param string $hash
+     */
+    public function setHash($hash)
+    {
+        $this->hash = $hash;
     }
 }

@@ -127,11 +127,37 @@ class Shopware_Controllers_Frontend_ShareBasket extends Enlight_Controller_Actio
      */
     public function saveBasket($articles)
     {
-        $statement = $this->container->get('dbal_connection')
-            ->prepare('INSERT IGNORE INTO s_plugin_sharebasket_baskets (basketId, articles, created) VALUES (:basketID, :articles, :created)');
-        $statement->bindParam(':articles', $articles);
+        $hash = sha1($articles);
         $created = date('Y-m-d H:i:s');
+
+        /** @var \Doctrine\DBAL\Query\QueryBuilder $builder */
+        $builder = $this->container->get('dbal_connection')->createQueryBuilder();
+        $builder->select('basketID')
+            ->from('s_plugin_sharebasket_baskets')
+            ->where('hash = :hash')
+            ->setParameter(':hash', $hash);
+        $basketId = $builder->execute()->fetch(\PDO::FETCH_COLUMN);
+
+        if (!empty($basketId)) {
+            /** @var \Doctrine\DBAL\Query\QueryBuilder $builder */
+            $builder = $this->container->get('dbal_connection')->createQueryBuilder();
+            $builder->update('s_plugin_sharebasket_baskets')
+                ->set('created', ':created')
+                ->where('basketID = :basketId')
+                ->setParameters([
+                    ':created' => $created,
+                    ':basketId' => $basketId,
+                ])
+                ->execute();
+
+            return $this->generateBasketUrl($basketId);
+        }
+
+        $statement = $this->container->get('dbal_connection')
+            ->prepare('INSERT IGNORE INTO s_plugin_sharebasket_baskets (basketId, articles, created, hash) VALUES (:basketID, :articles, :created, :hash)');
+        $statement->bindParam(':articles', $articles);
         $statement->bindParam(':created', $created);
+        $statement->bindParam(':hash', $hash);
         do {
             $basketId = $this->generateBasketId();
             $statement->bindParam(':basketID', $basketId);
