@@ -32,12 +32,16 @@ class FroshShareBasket extends Plugin
 
     /**
      * @param UninstallContext $context
+     *
+     * @throws \Exception
      */
     public function uninstall(UninstallContext $context)
     {
         parent::uninstall($context);
         if (!$context->keepUserData()) {
             $this->uninstallSchema();
+            $sql = file_get_contents($this->getPath() . '/Resources/sql/uninstall.sql');
+            $this->container->get('shopware.db')->query($sql);
         }
     }
 
