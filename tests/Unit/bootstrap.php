@@ -39,7 +39,7 @@ class TestKernel extends \Shopware\Kernel
         $kernel->boot();
         $container = $kernel->getContainer();
         $container->get('plugins')->Core()->ErrorHandler()->registerErrorHandler(E_ALL | E_STRICT);
-        /** @var $repository \Shopware\Models\Shop\Repository */
+        /** @var \Shopware\Models\Shop\Repository $repository */
         $repository = $container->get('models')->getRepository(Shop::class);
         $shop = $repository->getActiveDefault();
         $shop->registerResources();

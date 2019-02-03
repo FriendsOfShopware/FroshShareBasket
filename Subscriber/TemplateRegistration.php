@@ -14,7 +14,7 @@ class TemplateRegistration implements SubscriberInterface
     /**
      * Theme constructor.
      *
-     * @param $pluginDir
+     * @param string $pluginDir
      */
     public function __construct($pluginDir)
     {

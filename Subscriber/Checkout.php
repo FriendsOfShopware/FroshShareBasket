@@ -16,7 +16,7 @@ class Checkout implements SubscriberInterface
         ];
     }
 
-    public function onPostDispatchCheckout(\Enlight_Event_EventArgs $args)
+    public function onPostDispatchCheckout(\Enlight_Controller_ActionEventArgs $args)
     {
         /** @var \Shopware_Controllers_Frontend_Checkout $subject */
         $subject = $args->getSubject();

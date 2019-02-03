@@ -35,21 +35,21 @@ class Shopware_Controllers_Frontend_ShareBasket extends Enlight_Controller_Actio
         $articles = unserialize($basket['articles']);
 
         foreach ($articles as $article) {
-            if ((int) $article['modus'] === 1) {
+            if ($article['modus'] === '1') {
                 $this->container->get('system')->_GET['sAddPremium'] = $article['ordernumber'];
                 $basketModule->sInsertPremium();
-            } elseif ((int) $article['modus'] === 2) {
+            } elseif ($article['modus'] === '2') {
                 $basketModule->sAddVoucher($article['ordernumber']);
             } else {
                 $this->container->get('events')->notify('FroshShareBasket_Controller_loadAction_addArticle_Start', ['article' => $article]);
                 $insertId = $basketModule->sAddArticle($article['ordernumber'], $article['quantity'] ?: 1);
                 $insertId = $this->container->get('events')->filter('FroshShareBasket_Controller_loadAction_addArticle_Added', $insertId);
                 $this->updateBasketMode($article['modus'], $insertId);
-            }
 
-            foreach ($article['attributes'] as $attribute => $value) {
-                if ($value !== null) {
-                    $this->updateBasketPosition($insertId, $attribute, $value);
+                foreach ($article['attributes'] as $attribute => $value) {
+                    if ($value !== null) {
+                        $this->updateBasketPosition($insertId, $attribute, $value);
+                    }
                 }
             }
         }
@@ -71,7 +71,7 @@ class Shopware_Controllers_Frontend_ShareBasket extends Enlight_Controller_Actio
 
         $articles = [];
         foreach ($BasketData['content'] as $key => $article) {
-            if ((int) $article['modus'] === 2) {
+            if ($article['modus'] === '2') {
                 $voucher = $basketModule->sGetVoucher();
                 $article['ordernumber'] = $voucher['code'];
             }
@@ -100,7 +100,7 @@ class Shopware_Controllers_Frontend_ShareBasket extends Enlight_Controller_Actio
     }
 
     /**
-     * @param $basketId
+     * @param string $basketId
      *
      * @return mixed
      */
@@ -119,7 +119,7 @@ class Shopware_Controllers_Frontend_ShareBasket extends Enlight_Controller_Actio
     }
 
     /**
-     * @param $articles
+     * @param string $articles
      *
      * @throws \Doctrine\DBAL\DBALException
      *
@@ -187,8 +187,8 @@ class Shopware_Controllers_Frontend_ShareBasket extends Enlight_Controller_Actio
     }
 
     /**
-     * @param $basketId
-     * @param $insert
+     * @param string $basketId
+     * @param bool   $insert
      *
      * @return string
      */
@@ -206,7 +206,7 @@ class Shopware_Controllers_Frontend_ShareBasket extends Enlight_Controller_Actio
     }
 
     /**
-     * @param $basketId
+     * @param string $basketId
      *
      * @return mixed
      */
@@ -229,9 +229,9 @@ class Shopware_Controllers_Frontend_ShareBasket extends Enlight_Controller_Actio
     }
 
     /**
-     * @param $basketId
-     * @param $field
-     * @param $value
+     * @param string $basketId
+     * @param string $field
+     * @param string $value
      */
     public function updateBasketPosition($basketId, $field, $value)
     {
@@ -260,8 +260,8 @@ class Shopware_Controllers_Frontend_ShareBasket extends Enlight_Controller_Actio
     }
 
     /**
-     * @param $modus
-     * @param $basketId
+     * @param string $modus
+     * @param string $basketId
      */
     public function updateBasketMode($modus, $basketId)
     {
