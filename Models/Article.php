@@ -65,14 +65,6 @@ class Article extends ModelEntity
     }
 
     /**
-     * @param int $id
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
-
-    /**
      * @return Basket
      */
     public function getBasket()
