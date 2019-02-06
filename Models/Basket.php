@@ -3,6 +3,7 @@
 namespace FroshShareBasket\Models;
 
 use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Shopware\Components\Model\ModelEntity;
 
@@ -18,32 +19,31 @@ use Shopware\Components\Model\ModelEntity;
 class Basket extends ModelEntity
 {
     /**
+     * @var ArrayCollection
+     * @ORM\OneToMany(targetEntity="FroshShareBasket\Models\Article", mappedBy="basket", cascade={"persist"})
+     */
+    protected $articles;
+
+    /**
      * Unique identifier
      *
-     * @var int
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    protected $id;
-
-    /**
-     * @var int
-     * @ORM\Column(name="basketID", type="string", nullable=false)
-     */
-    protected $basketID;
+    private $id;
 
     /**
      * @var string
-     * @ORM\Column(name="articles", type="text", nullable=false)
+     * @ORM\Column(name="basketID", type="string", nullable=false)
      */
-    protected $articles;
+    private $basketID;
 
     /**
      * @var DateTime
      * @ORM\Column(name="created", type="datetime", nullable=false)
      */
-    protected $created;
+    private $created;
 
     /**
      * @var string
@@ -52,39 +52,21 @@ class Basket extends ModelEntity
     private $hash;
 
     /**
-     * @return int
+     * @var int
+     * @ORM\Column(name="saveCount", type="integer", nullable=false)
      */
-    public function getId()
+    private $saveCount = 1;
+
+    /**
+     * Basket constructor.
+     */
+    public function __construct()
     {
-        return $this->id;
+        $this->articles = new ArrayCollection();
     }
 
     /**
-     * @param int $id
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
-
-    /**
-     * @return int
-     */
-    public function getBasketID()
-    {
-        return $this->basketID;
-    }
-
-    /**
-     * @param int $basketID
-     */
-    public function setBasketID($basketID)
-    {
-        $this->basketID = $basketID;
-    }
-
-    /**
-     * @return string
+     * @return ArrayCollection
      */
     public function getArticles()
     {
@@ -92,11 +74,43 @@ class Basket extends ModelEntity
     }
 
     /**
-     * @param string $articles
+     * @param ArrayCollection $articles
      */
     public function setArticles($articles)
     {
         $this->articles = $articles;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param mixed $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBasketID()
+    {
+        return $this->basketID;
+    }
+
+    /**
+     * @param string $basketID
+     */
+    public function setBasketID($basketID)
+    {
+        $this->basketID = $basketID;
     }
 
     /**
@@ -129,5 +143,50 @@ class Basket extends ModelEntity
     public function setHash($hash)
     {
         $this->hash = $hash;
+    }
+
+    /**
+     * @return int
+     */
+    public function getSaveCount(): int
+    {
+        return $this->saveCount;
+    }
+
+    /**
+     * @param int $saveCount
+     */
+    public function setSaveCount(int $saveCount): void
+    {
+        $this->saveCount = $saveCount;
+    }
+
+    /**
+     * @param Article $article
+     *
+     * @return $this
+     */
+    public function addArticle($article)
+    {
+        $this->articles->add($article);
+
+        return $this;
+    }
+
+    /**
+     * @param Article $article
+     *
+     * @return $this
+     */
+    public function removeArticle($article)
+    {
+        $this->articles->removeElement($article);
+
+        return $this;
+    }
+
+    public function increaseSaveCount()
+    {
+        ++$this->saveCount;
     }
 }

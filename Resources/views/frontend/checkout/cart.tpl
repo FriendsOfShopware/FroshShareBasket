@@ -4,17 +4,26 @@
 {block name='frontend_checkout_actions_checkout'}
     <div class="frosh-share-basket--wrapper left">
         {if $shareBasketState == 'basketnotfound'}
+
             {include file="frontend/_includes/messages.tpl" type="warning" content="{s name="basketnotfound"}{/s}"}
-        {/if}
-        {if $shareBasketState == 'basketloaded'}
+
+        {elseif $shareBasketState == 'basketloaded'}
+
             {include file="frontend/_includes/messages.tpl" type="success" content="{s name="basketloaded"}{/s}"}
+
+        {elseif $shareBasketState == 'basketexists'}
+
+            {include file="frontend/frosh_share_basket/save.tpl" shareBasketUrl=$shareBasketUrl}
+
         {else}
+
             <div class="frosh-share-basket--response"></div>
-            <form action="{url controller=ShareBasket action=save}" method="post" class="frosh-share-basket--form">
+            <form action="{url controller=FroshShareBasket action=save}" method="post" class="frosh-share-basket--form">
                 <button class="btn is--primary" type="submit" name="Submit" value="submit">
                     <i class="icon--basket"></i> {s name="savebasket"}{/s}
                 </button>
             </form>
+
         {/if}
     </div>
     {$smarty.block.parent}

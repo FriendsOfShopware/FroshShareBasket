@@ -11,7 +11,7 @@
          verbose="true">
 
     <testsuites>
-        <testsuite name="ShareBasketTest">
+        <testsuite name="FroshShareBasketTest">
             <directory>./Functional</directory>
         </testsuite>
     </testsuites>

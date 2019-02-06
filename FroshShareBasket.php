@@ -4,6 +4,7 @@ namespace FroshShareBasket;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Tools\SchemaTool;
+use FroshShareBasket\Models\Article;
 use FroshShareBasket\Models\Basket;
 use Shopware\Components\Plugin;
 use Shopware\Components\Plugin\Context\ActivateContext;
@@ -72,6 +73,7 @@ class FroshShareBasket extends Plugin
 
         $tool = new SchemaTool($em);
 
+        $tool->updateSchema([$em->getClassMetadata(Article::class)], true);
         $tool->updateSchema([$em->getClassMetadata(Basket::class)], true);
     }
 
@@ -85,6 +87,7 @@ class FroshShareBasket extends Plugin
 
         $tool = new SchemaTool($em);
 
+        $tool->dropSchema([$em->getClassMetadata(Article::class)]);
         $tool->dropSchema([$em->getClassMetadata(Basket::class)]);
     }
 }

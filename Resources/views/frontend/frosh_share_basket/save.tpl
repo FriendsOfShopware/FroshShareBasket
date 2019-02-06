@@ -1,9 +1,19 @@
 {namespace name="frontend/share_basket/checkout/cart"}
 
 {block name='frontend_checkout_forsh_share_basket_save'}
-    {include file="frontend/_includes/messages.tpl" type="success" content="{s name=basketsaved}{/s}"}
-    <input type="text" class="is--small" id="sharebasket" data-clipboard-target="#sharebasket" readonly
-           value="{$shareBasketUrl}">
+
+    {if $shareBasketState == 'basketsaved'}
+
+        {include file="frontend/_includes/messages.tpl" type="success" content="{s name=basketsaved}{/s}"}
+
+    {else}
+
+        {include file="frontend/_includes/messages.tpl" type="info" content="{s name=basketshare}{/s}"}
+
+    {/if}
+
+    <input type="text" class="is--small" id="sharebasket" data-clipboard-target="#sharebasket" readonly value="{$shareBasketUrl}">
+
     <div class="frosh-share-basket--buttons">
         <a class="btn is--small is--center share-mail" data-clipboard-target="#sharebasket">
             <i class="icon--clipboard"></i> {s name="copyurl"}{/s}

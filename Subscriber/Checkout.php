@@ -3,9 +3,33 @@
 namespace FroshShareBasket\Subscriber;
 
 use Enlight\Event\SubscriberInterface;
+use FroshShareBasket\Components\ShareBasketService;
+use Shopware\Components\DependencyInjection\Bridge\Session;
 
 class Checkout implements SubscriberInterface
 {
+    /**
+     * @var ShareBasketService
+     */
+    private $shareBasketService;
+
+    /**
+     * @var \Enlight_Components_Session_Namespace
+     */
+    private $session;
+
+    /**
+     * Checkout constructor.
+     *
+     * @param ShareBasketService                    $shareBasketService
+     * @param \Enlight_Components_Session_Namespace $session
+     */
+    public function __construct(ShareBasketService $shareBasketService, \Enlight_Components_Session_Namespace $session)
+    {
+        $this->shareBasketService = $shareBasketService;
+        $this->session = $session;
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -22,8 +46,21 @@ class Checkout implements SubscriberInterface
         $subject = $args->getSubject();
         $request = $subject->Request();
         $view = $subject->View();
+
         if ($request->has('shareBasketState')) {
             $view->assign('shareBasketState', $request->getParam('shareBasketState'));
+
+            return;
+        }
+
+        if ($this->session->offsetExists('froshShareBasketHash')) {
+            $hash = $this->session->offsetGet('froshShareBasketHash');
+            $basketData = $this->shareBasketService->prepareBasketData();
+
+            if ($hash === $basketData['hash']) {
+                $view->assign('shareBasketState', 'basketexists');
+                $view->assign('shareBasketUrl', $this->shareBasketService->saveBasket());
+            }
         }
     }
 }

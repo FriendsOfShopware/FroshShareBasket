@@ -8,7 +8,7 @@
 
         init: function () {
             var me = this;
-
+            new ClipboardJS('[data-clipboard-target]');
             me._on(me.opts.formSelector, 'submit', $.proxy(me.onSubmitForm, me));
         },
 
@@ -31,7 +31,6 @@
                 success: function (response) {
                     form.remove();
                     responseContainer.empty().append(response).hide().fadeIn();
-                    new ClipboardJS('[data-clipboard-target]');
                     $.loadingIndicator.close();
                 }
             });

@@ -50,16 +50,18 @@ class CronJob implements SubscriberInterface
     {
         $statement = $this->connection
             ->prepare('DELETE 
-                  baskets, urls 
+                  baskets, urls, articles
               FROM
                   s_plugin_sharebasket_baskets AS baskets 
+              LEFT JOIN 
+                  s_plugin_sharebasket_articles AS articles ON (baskets.id = articles.basket_id)
               LEFT JOIN 
                   s_core_rewrite_urls AS urls ON (urls.org_path = concat(:path,baskets.basketID))
               WHERE
                   created < DATE_SUB(NOW(), INTERVAL :interval MONTH)
         ');
 
-        $path = 'sViewport=ShareBasket&sAction=load&bID=';
+        $path = 'sViewport=FroshShareBasket&sAction=load&bID=';
         $statement->bindParam(':path', $path);
         $statement->bindParam(':interval', $this->pluginConfig['interval']);
         $statement->execute();
