@@ -64,7 +64,7 @@ class FroshShareBasket extends Plugin
     }
 
     /**
-     * Install or update s_plugin_sharebasket_baskets table
+     * Install or update s_plugin_sharebasket_baskets, s_plugin_sharebasket_articles table
      */
     private function installSchema()
     {
@@ -73,12 +73,14 @@ class FroshShareBasket extends Plugin
 
         $tool = new SchemaTool($em);
 
-        $tool->updateSchema([$em->getClassMetadata(Article::class)], true);
-        $tool->updateSchema([$em->getClassMetadata(Basket::class)], true);
+        $tool->updateSchema([
+            $em->getClassMetadata(Article::class),
+            $em->getClassMetadata(Basket::class),
+        ], true);
     }
 
     /**
-     * Remove s_plugin_sharebasket_baskets table
+     * Remove s_plugin_sharebasket_baskets, s_plugin_sharebasket_articles table
      */
     private function uninstallSchema()
     {
@@ -87,7 +89,9 @@ class FroshShareBasket extends Plugin
 
         $tool = new SchemaTool($em);
 
-        $tool->dropSchema([$em->getClassMetadata(Article::class)]);
-        $tool->dropSchema([$em->getClassMetadata(Basket::class)]);
+        $tool->dropSchema([
+            $em->getClassMetadata(Article::class),
+            $em->getClassMetadata(Basket::class),
+        ]);
     }
 }
