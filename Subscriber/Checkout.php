@@ -4,7 +4,6 @@ namespace FroshShareBasket\Subscriber;
 
 use Enlight\Event\SubscriberInterface;
 use FroshShareBasket\Components\ShareBasketService;
-use Shopware\Components\DependencyInjection\Bridge\Session;
 
 class Checkout implements SubscriberInterface
 {

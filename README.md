@@ -18,6 +18,8 @@ This plugin allows your customers to save the current basket and share it via li
 
 ![Settings](https://raw.githubusercontent.com/FriendsOfShopware/FroshShareBasket/master/Resources/store/images/1.png)
 
+![Statistics](https://raw.githubusercontent.com/FriendsOfShopware/FroshShareBasket/master/Resources/store/images/2.png)
+
 
 ## Requirements
 

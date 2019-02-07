@@ -5,6 +5,7 @@ namespace FroshShareBasket\Components;
 use Doctrine\DBAL\Connection;
 use FroshShareBasket\Models\Article;
 use FroshShareBasket\Models\Basket;
+use Shopware\Bundle\StoreFrontBundle\Service\ContextServiceInterface;
 use Shopware\Components\Model\ModelManager;
 use Shopware\Components\Routing\Router;
 
@@ -41,6 +42,11 @@ class ShareBasketService
     private $router;
 
     /**
+     * @var ContextServiceInterface
+     */
+    private $context;
+
+    /**
      * ShareBasketService constructor.
      *
      * @param array                                 $pluginConfig
@@ -49,6 +55,7 @@ class ShareBasketService
      * @param ModelManager                          $modelManager
      * @param Connection                            $connection
      * @param Router                                $router
+     * @param ContextServiceInterface               $context
      */
     public function __construct(
         array $pluginConfig,
@@ -56,7 +63,8 @@ class ShareBasketService
         \Enlight_Components_Session_Namespace $session,
         ModelManager $modelManager,
         Connection $connection,
-        Router $router
+        Router $router,
+        ContextServiceInterface $context
     ) {
         $this->pluginConfig = $pluginConfig;
         $this->modules = $modules;
@@ -64,6 +72,7 @@ class ShareBasketService
         $this->modelManager = $modelManager;
         $this->connection = $connection;
         $this->router = $router;
+        $this->context = $context;
     }
 
     /**
@@ -134,7 +143,7 @@ class ShareBasketService
 
             $this->modelManager->flush();
 
-            return $this->generateBasketUrl($basket->getBasketID());
+            return $this->generateBasketUrl($basket->getBasketID(), false);
         }
 
         $basketModel = new Basket();
@@ -147,6 +156,7 @@ class ShareBasketService
 
         $basketModel->setCreated(new \DateTime());
         $basketModel->setHash($hash);
+        $basketModel->setShopId($this->context->getShopContext()->getShop()->getId());
 
         $maxAttempts = 3;
         $attempts = 0;
@@ -176,7 +186,7 @@ class ShareBasketService
      *
      * @return string
      */
-    public function generateBasketId()
+    private function generateBasketId()
     {
         $characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-_';
         $basketId = '';
@@ -193,7 +203,7 @@ class ShareBasketService
      *
      * @return string
      */
-    public function generateBasketUrl($basketId, $insert = true)
+    private function generateBasketUrl($basketId, $insert = true)
     {
         $path = 'loadBasket/' . $basketId;
 
@@ -211,18 +221,18 @@ class ShareBasketService
      *
      * @return mixed
      */
-    public function getBasketAttributes($basketId)
+    private function getBasketAttributes($basketId)
     {
         /** @var \Doctrine\DBAL\Query\QueryBuilder $builder */
         $builder = $this->connection->createQueryBuilder();
         $builder->select('soba.*')
             ->from('s_order_basket', 'sob')
             ->innerJoin('sob', 's_order_basket_attributes', 'soba', 'soba.basketID = sob.id')
-            ->where('sob.id = :basketID')
-            ->andWhere('sessionID = :sessionID')
+            ->where('sob.id = :basketId')
+            ->andWhere('sessionID = :sessionId')
             ->setParameters([
-                ':basketID' => $basketId,
-                ':sessionID' => $this->session->get('sessionId'),
+                ':basketId' => $basketId,
+                ':sessionId' => $this->session->get('sessionId'),
             ]);
         $statement = $builder->execute();
 

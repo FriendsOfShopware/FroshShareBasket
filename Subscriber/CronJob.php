@@ -54,9 +54,9 @@ class CronJob implements SubscriberInterface
               FROM
                   s_plugin_sharebasket_baskets AS baskets 
               LEFT JOIN 
-                  s_plugin_sharebasket_articles AS articles ON (baskets.id = articles.basket_id)
+                  s_plugin_sharebasket_articles AS articles ON (baskets.id = articles.share_basket_id)
               LEFT JOIN 
-                  s_core_rewrite_urls AS urls ON (urls.org_path = concat(:path,baskets.basketID))
+                  s_core_rewrite_urls AS urls ON (urls.org_path = concat(:path,baskets.basket_id))
               WHERE
                   created < DATE_SUB(NOW(), INTERVAL :interval MONTH)
         ');

@@ -18,7 +18,7 @@ class Article extends ModelEntity
     /**
      * @var Basket
      * @ORM\ManyToOne(targetEntity="FroshShareBasket\Models\Basket", inversedBy="articles")
-     * @ORM\JoinColumn(name="basket_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="share_basket_id", referencedColumnName="id")
      */
     protected $basket;
 

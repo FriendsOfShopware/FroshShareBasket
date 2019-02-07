@@ -1,6 +1,6 @@
 {namespace name="frontend/share_basket/checkout/cart"}
 
-{block name='frontend_checkout_forsh_share_basket_save'}
+{block name='frontend_checkout_frosh_share_basket_save'}
 
     {if $shareBasketState == 'basketsaved'}
 

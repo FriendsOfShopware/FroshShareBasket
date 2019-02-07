@@ -24,7 +24,7 @@ class Shopware_Controllers_Frontend_FroshShareBasket extends Enlight_Controller_
         $basketRepository = $this->container->get('models')->getRepository(Basket::class);
 
         /** @var Basket $basket */
-        $basket = $basketRepository->findOneBy(['basketID' => $this->Request()->getParam('bID')]);
+        $basket = $basketRepository->findOneBy(['basketId' => $this->Request()->getParam('bID')]);
 
         if ($basket === null) {
             $this->forward('cart', 'checkout', 'frontend', ['shareBasketState' => 'basketnotfound']);
@@ -108,20 +108,20 @@ class Shopware_Controllers_Frontend_FroshShareBasket extends Enlight_Controller_
     }
 
     /**
-     * @param int    $modus
+     * @param int    $mode
      * @param string $basketId
      */
-    public function updateBasketMode($modus, $basketId)
+    public function updateBasketMode($mode, $basketId)
     {
         /** @var \Doctrine\DBAL\Query\QueryBuilder $builder */
         $builder = $this->container->get('dbal_connection')->createQueryBuilder();
         $builder->update('s_order_basket')
-            ->set('modus', (string) $modus)
-            ->where('id = :basketID')
-            ->andWhere('sessionID = :sessionID')
+            ->set('modus', (string) $mode)
+            ->where('id = :basketId')
+            ->andWhere('sessionId = :sessionId')
             ->setParameters([
-                ':basketID' => $basketId,
-                ':sessionID' => $this->container->get('session')->get('sessionId'),
+                ':basketId' => $basketId,
+                ':sessionId' => $this->container->get('session')->get('sessionId'),
             ])
             ->execute();
     }

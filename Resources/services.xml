@@ -21,6 +21,12 @@
             <argument id="models" type="service"/>
             <argument id="dbal_connection" type="service"/>
             <argument id="router" type="service"/>
+            <argument id="shopware_storefront.context_service" type="service"/>
+        </service>
+
+        <service class="FroshShareBasket\Subscriber\Analytics" id="frosh_share_basket.subscriber.analytics">
+            <argument>%frosh_share_basket.plugin_dir%</argument>
+            <tag name="shopware.event_subscriber"/>
         </service>
 
         <service class="FroshShareBasket\Subscriber\TemplateRegistration" id="frosh_share_basket.subscriber.template_registration">

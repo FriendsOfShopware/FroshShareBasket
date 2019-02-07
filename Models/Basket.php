@@ -11,7 +11,7 @@ use Shopware\Components\Model\ModelEntity;
  * @ORM\Entity
  * @ORM\Table(name="s_plugin_sharebasket_baskets",
  *     uniqueConstraints={
- *        @ORM\UniqueConstraint(columns={"basketID"}),
+ *        @ORM\UniqueConstraint(columns={"basket_id"}),
  *        @ORM\UniqueConstraint(columns={"hash"})
  *    }
  * )
@@ -35,9 +35,9 @@ class Basket extends ModelEntity
 
     /**
      * @var string
-     * @ORM\Column(name="basketID", type="string", nullable=false)
+     * @ORM\Column(name="basket_id", type="string", nullable=false)
      */
-    private $basketID;
+    private $basketId;
 
     /**
      * @var DateTime
@@ -53,9 +53,15 @@ class Basket extends ModelEntity
 
     /**
      * @var int
-     * @ORM\Column(name="saveCount", type="integer", nullable=false)
+     * @ORM\Column(name="save_count", type="integer", nullable=false)
      */
     private $saveCount = 1;
+
+    /**
+     * @var int
+     * @ORM\Column(name="shop_id", type="integer", nullable=false)
+     */
+    private $shopId;
 
     /**
      * Basket constructor.
@@ -94,15 +100,15 @@ class Basket extends ModelEntity
      */
     public function getBasketID()
     {
-        return $this->basketID;
+        return $this->basketId;
     }
 
     /**
-     * @param string $basketID
+     * @param string $basketId
      */
-    public function setBasketID($basketID)
+    public function setBasketID($basketId)
     {
-        $this->basketID = $basketID;
+        $this->basketId = $basketId;
     }
 
     /**
@@ -140,7 +146,7 @@ class Basket extends ModelEntity
     /**
      * @return int
      */
-    public function getSaveCount(): int
+    public function getSaveCount()
     {
         return $this->saveCount;
     }
@@ -148,7 +154,7 @@ class Basket extends ModelEntity
     /**
      * @param int $saveCount
      */
-    public function setSaveCount(int $saveCount): void
+    public function setSaveCount($saveCount)
     {
         $this->saveCount = $saveCount;
     }
@@ -163,6 +169,22 @@ class Basket extends ModelEntity
         $this->articles->add($article);
 
         return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getShopId()
+    {
+        return $this->shopId;
+    }
+
+    /**
+     * @param int $shopId
+     */
+    public function setShopId($shopId)
+    {
+        $this->shopId = $shopId;
     }
 
     /**
