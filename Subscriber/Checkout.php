@@ -3,12 +3,12 @@
 namespace FroshShareBasket\Subscriber;
 
 use Enlight\Event\SubscriberInterface;
-use FroshShareBasket\Components\ShareBasketService;
+use FroshShareBasket\Components\ShareBasketServiceInterface;
 
 class Checkout implements SubscriberInterface
 {
     /**
-     * @var ShareBasketService
+     * @var ShareBasketServiceInterface
      */
     private $shareBasketService;
 
@@ -20,10 +20,10 @@ class Checkout implements SubscriberInterface
     /**
      * Checkout constructor.
      *
-     * @param ShareBasketService                    $shareBasketService
+     * @param ShareBasketServiceInterface           $shareBasketService
      * @param \Enlight_Components_Session_Namespace $session
      */
-    public function __construct(ShareBasketService $shareBasketService, \Enlight_Components_Session_Namespace $session)
+    public function __construct(ShareBasketServiceInterface $shareBasketService, \Enlight_Components_Session_Namespace $session)
     {
         $this->shareBasketService = $shareBasketService;
         $this->session = $session;

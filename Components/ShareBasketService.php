@@ -9,7 +9,7 @@ use Shopware\Bundle\StoreFrontBundle\Service\ContextServiceInterface;
 use Shopware\Components\Model\ModelManager;
 use Shopware\Components\Routing\Router;
 
-class ShareBasketService
+class ShareBasketService implements ShareBasketServiceInterface
 {
     /**
      * @var array
@@ -171,7 +171,7 @@ class ShareBasketService
                 $this->session->offsetSet('froshShareBasketHash', $hash);
 
                 return $this->generateBasketUrl($basketId);
-            } catch (Exception $e) {
+            } catch (\Exception $e) {
                 ++$attempts;
                 continue;
             }
@@ -198,8 +198,8 @@ class ShareBasketService
     }
 
     /**
-     * @param $basketId
-     * @param bool $insert
+     * @param string $basketId
+     * @param bool   $insert
      *
      * @return string
      */
@@ -217,7 +217,7 @@ class ShareBasketService
     }
 
     /**
-     * @param $basketId
+     * @param string $basketId
      *
      * @return mixed
      */

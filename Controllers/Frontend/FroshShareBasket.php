@@ -23,7 +23,7 @@ class Shopware_Controllers_Frontend_FroshShareBasket extends Enlight_Controller_
     {
         $basketRepository = $this->container->get('models')->getRepository(Basket::class);
 
-        /** @var Basket $basket */
+        /** @var Basket|null $basket */
         $basket = $basketRepository->findOneBy(['basketId' => $this->Request()->getParam('bID')]);
 
         if ($basket === null) {
