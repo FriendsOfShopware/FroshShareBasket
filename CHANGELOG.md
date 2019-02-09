@@ -2,14 +2,8 @@
 
 ## 1.0.0 (2019-02-01)
 
-**Implemented enhancements:**
+- First release
 
-- 
+## 1.1.0 (2019-02-09)
 
-**Closed issues:**
-
--
-
-**Merged pull requests:**
-
-- 
+- Added statistics about stored baskets

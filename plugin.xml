@@ -4,12 +4,17 @@
     <label lang="de">Warenkorb teilen</label>
     <label lang="en">Share basket</label>
 
-    <version>1.0.0</version>
+    <version>1.1.0</version>
     <copyright>Friends of Shopware</copyright>
     <license>MIT</license>
     <link>https://friendsofshopware.github.io/</link>
     <author>Friends of Shopware</author>
     <compatibility minVersion="5.5.0" />
+
+    <changelog version="1.1.0">
+        <changes lang="de">Statistiken über gespeicherte Warenkörbe hinzugefügt.</changes>
+        <changes lang="en">Added statistics about stored baskets.</changes>
+    </changelog>
 
     <changelog version="1.0.0">
         <changes lang="de">Erstveröffentlichung</changes>
