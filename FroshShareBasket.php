@@ -2,10 +2,13 @@
 
 namespace FroshShareBasket;
 
+use Doctrine\DBAL\Connection;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Tools\SchemaTool;
+use FroshShareBasket\Bootstrap\Updater;
 use FroshShareBasket\Models\Article;
 use FroshShareBasket\Models\Basket;
+use Shopware\Components\Model\ModelManager;
 use Shopware\Components\Plugin;
 use Shopware\Components\Plugin\Context\ActivateContext;
 use Shopware\Components\Plugin\Context\DeactivateContext;
@@ -25,11 +28,30 @@ class FroshShareBasket extends Plugin
 
     /**
      * @param UpdateContext $context
+     *
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function update(UpdateContext $context)
     {
-        parent::update($context);
+        /** @var Connection $connection */
+        $connection = $this->container->get('dbal_connection');
+
+        /** @var \sRewriteTable $rewriteTableModule */
+        $rewriteTableModule = $this->container->get('modules')->getModule('sRewriteTable');
+
+        /** @var ModelManager $modelManager */
+        $modelManager = $this->container->get('models');
+
+        $updater = new Updater(
+            $connection,
+            $rewriteTableModule,
+            $modelManager,
+            $this->getPath()
+        );
+        $updater->update($context->getCurrentVersion());
+
         $this->installSchema();
+        $context->scheduleClearCache(ActivateContext::CACHE_LIST_DEFAULT);
     }
 
     /**
