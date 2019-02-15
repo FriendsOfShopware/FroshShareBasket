@@ -16,7 +16,7 @@ class Analytics implements SubscriberInterface
      *
      * @param string $pluginDir
      */
-    public function __construct(string $pluginDir)
+    public function __construct($pluginDir)
     {
         $this->pluginDir = $pluginDir;
     }

@@ -49,7 +49,12 @@ class Shopware_Controllers_Frontend_FroshShareBasket extends Enlight_Controller_
                 $insertId = $this->container->get('events')->filter('FroshShareBasket_Controller_loadAction_addArticle_Added', $insertId);
                 $this->updateBasketMode($article->getMode(), $insertId);
 
-                $attributes = unserialize($article->getAttributes(), ['allowed_classes'=>false]);
+                if (PHP_MAJOR_VERSION >= 7) {
+                    $attributes = unserialize($article->getAttributes(), ['allowed_classes'=>false]);
+                } else {
+                    $attributes = unserialize($article->getAttributes());
+                }
+
                 foreach ($attributes as $attribute => $value) {
                     if ($value !== null) {
                         $this->updateBasketPosition($insertId, $attribute, $value);

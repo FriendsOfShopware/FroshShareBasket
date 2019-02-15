@@ -16,15 +16,14 @@ This plugin allows your customers to save the current basket and share it via li
 
 ![Demonstration](https://raw.githubusercontent.com/FriendsOfShopware/FroshShareBasket/master/Resources/store/images/0.gif)
 
-![Settings](https://raw.githubusercontent.com/FriendsOfShopware/FroshShareBasket/master/Resources/store/images/1.png)
-
 ![Statistics](https://raw.githubusercontent.com/FriendsOfShopware/FroshShareBasket/master/Resources/store/images/2.png)
 
+![Settings](https://raw.githubusercontent.com/FriendsOfShopware/FroshShareBasket/master/Resources/store/images/1.png)
 
 ## Requirements
 
 * min Shopware 5.5.0
-* min PHP 7.0
+* min PHP 5.6
 
 
 # Installation
