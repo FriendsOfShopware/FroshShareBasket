@@ -33,7 +33,7 @@
             <value>true</value>
         </element>
 
-        <element scope="shop" type="combo">
+        <element type="combo">
             <name>attributesToStore</name>
             <label lang="de">Zusätzliche Felder speichern</label>
             <label lang="en">Store additional fields</label>
