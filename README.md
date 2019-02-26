@@ -14,7 +14,7 @@ This plugin allows your customers to save the current basket and share it via li
 * Voucher as well as the article mode is saved.
 * Also stores fields defined in the backend of the "s_order_basket_attributes" table. This results in a high compatibility with other plugins.
 
-![Demonstration](https://raw.githubusercontent.com/FriendsOfShopware/FroshShareBasket/master/Resources/store/images/0.gif)
+![Demonstration](https://raw.githubusercontent.com/FriendsOfShopware/FroshShareBasket/master/Resources/store/images/description_0.gif)
 
 ![Statistics](https://raw.githubusercontent.com/FriendsOfShopware/FroshShareBasket/master/Resources/store/images/2.png)
 
