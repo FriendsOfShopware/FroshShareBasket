@@ -6,6 +6,7 @@
 
 This plugin allows your customers to save the current basket and share it via link.
 
+
 ### Features
 
 * Share via link, email, Facebook or WhatsApp.
