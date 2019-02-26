@@ -44,13 +44,13 @@ after_success:
     - ./build.sh
 
 stages:
-    - test
-    - name: Store-Check
-      if: tag IS blank
-    - name: Store-Sync
-      if: branch = master
-    - name: Store-Deploy
-      if: tag IS present
+  - test
+  - name: Store-Check
+    if: tag IS blank AND env(PLUGIN_ID) IS present AND type != pull_request
+  - name: Store-Sync
+    if: branch = master AND env(PLUGIN_ID) IS present AND type != pull_request
+  - name: Store-Deploy
+    if: tag IS present
 
 jobs:
     include:
