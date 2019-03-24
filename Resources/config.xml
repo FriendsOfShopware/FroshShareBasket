@@ -33,6 +33,15 @@
             <value>true</value>
         </element>
 
+        <element scope="shop" type="boolean">
+            <name>webshare</name>
+            <label lang="de">Web Share</label>
+            <label lang="en">Web Share</label>
+            <value>true</value>
+            <description lang="de">Aktiviert die native Teilen-Funktion auf unterstützten Endgeräten.</description>
+            <description lang="en">Enables the native sharing feature on supported devices.</description>
+        </element>
+
         <element type="combo">
             <name>attributesToStore</name>
             <label lang="de">Zusätzliche Felder speichern</label>

@@ -4,12 +4,31 @@
         defaults: {
             formSelector: '.frosh-share-basket--form',
             responseContainerSelector: '.frosh-share-basket--response',
+            webShareButtonSelector: '.share-webshare',
         },
 
         init: function () {
             var me = this;
+
             new ClipboardJS('[data-clipboard-target]');
             me._on(me.opts.formSelector, 'submit', $.proxy(me.onSubmitForm, me));
+
+            if ($(me.opts.webShareButtonSelector).length && navigator.share !== undefined) {
+                $(me.opts.webShareButtonSelector).css('display', 'inline-block');
+                me._on(me.opts.webShareButtonSelector, 'click', $.proxy(me.onClickWebShare, me));
+            }
+        },
+
+        onClickWebShare: function(event){
+            var $target = $(event.currentTarget);
+
+            event.preventDefault();
+
+            navigator.share({
+                title: $target.data('share-title'),
+                text: $target.data('share-text'),
+                url: $target.data('share-url'),
+            });
         },
 
         onSubmitForm: function (event) {

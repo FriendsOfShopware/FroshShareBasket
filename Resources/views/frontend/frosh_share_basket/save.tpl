@@ -21,7 +21,7 @@
         <input type="text" class="is--small" id="sharebasket" data-clipboard-target="#sharebasket" readonly value="{$shareBasketUrl}">
 
         <div class="frosh-share-basket--buttons">
-            <a class="btn is--small is--center share-mail" data-clipboard-target="#sharebasket">
+            <a class="btn is--small is--center share-clipboard" data-clipboard-target="#sharebasket">
                 <i class="icon--clipboard"></i> {s name="copyurl"}{/s}
             </a>
             {if {config namespace=FroshShareBasket name=email}}
@@ -40,6 +40,14 @@
                 <a class="btn is--small is--center share-whatsapp" target="_blank"
                    href="https://api.whatsapp.com/send?text={s name='sharetitle'}{/s} {$sShopname} {$shareBasketUrl}">
                     <i class="icon--share"></i> {s name="whatsapp"}{/s}
+                </a>
+            {/if}
+            {if {config namespace=FroshShareBasket name=webshare}}
+                <a class="btn is--small is--center share-webshare"
+                      data-share-title="{s name='sharetitle'}{/s} {$sShopname}"
+                      data-share-text=""
+                      data-share-url="{$shareBasketUrl}">
+                    <i class="icon--share"></i> {s name="webshare"}{/s}
                 </a>
             {/if}
         </div>
