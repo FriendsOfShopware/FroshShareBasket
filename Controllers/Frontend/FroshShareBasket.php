@@ -64,17 +64,21 @@ class Shopware_Controllers_Frontend_FroshShareBasket extends Enlight_Controller_
         $this->forward('cart', 'checkout', 'frontend', ['shareBasketState' => 'basketloaded']);
     }
 
+
     /**
-     * @throws Enlight_Exception
-     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws Exception
      */
     public function saveAction()
     {
         $shareBasketService = $this->container->get('frosh_share_basket.components.share_basket_service');
         $shareBasketUrl = $shareBasketService->saveBasket();
 
-        $this->View()->assign('shareBasketUrl', $shareBasketUrl);
-        $this->View()->assign('shareBasketState', 'basketsaved');
+        if ($shareBasketUrl === false) {
+            $this->View()->assign('shareBasketState', 'basketsavefailed');
+        } else {
+            $this->View()->assign('shareBasketUrl', $shareBasketUrl);
+            $this->View()->assign('shareBasketState', 'basketsaved');
+        }
     }
 
     /**

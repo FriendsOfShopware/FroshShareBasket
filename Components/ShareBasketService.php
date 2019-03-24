@@ -121,10 +121,9 @@ class ShareBasketService implements ShareBasketServiceInterface
     }
 
     /**
-     * @throws \Doctrine\ORM\OptimisticLockException
-     * @throws \Enlight_Exception
+     * @throws \Exception
      *
-     * @return string
+     * @return bool|string
      */
     public function saveBasket()
     {
@@ -158,27 +157,40 @@ class ShareBasketService implements ShareBasketServiceInterface
         $basketModel->setHash($hash);
         $basketModel->setShopId($this->context->getShopContext()->getShop()->getId());
 
-        $maxAttempts = 3;
-        $attempts = 0;
+        try {
+            return $this->persistShareBasket($basketModel, $this->generateBasketId());
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
 
-        do {
-            try {
-                $basketId = $this->generateBasketId();
-                $basketModel->setBasketID($basketId);
-                $this->modelManager->persist($basketModel);
-                $this->modelManager->flush();
+    /**
+     * @param Basket $basketModel
+     * @param $basketId
+     * @param int $attempts
+     *
+     * @throws \Exception
+     *
+     * @return bool|string
+     */
+    private function persistShareBasket(Basket $basketModel, $basketId, $attempts = 0)
+    {
+        if ($attempts > 3) {
+            return false;
+        }
 
-                $this->session->offsetSet('froshShareBasketHash', $hash);
+        if ($this->modelManager->getRepository(Basket::class)->find($basketId) !== null) {
+            $basketId = $this->generateBasketId();
 
-                return $this->generateBasketUrl($basketId);
-            } catch (\Exception $e) {
-                ++$attempts;
-                continue;
-            }
-            break;
-        } while (
-            $attempts <= $maxAttempts
-        );
+            return $this->persistShareBasket($basketModel, $basketId, $attempts++);
+        }
+
+        $basketModel->setBasketID($basketId);
+        $this->modelManager->persist($basketModel);
+        $this->modelManager->flush();
+        $this->session->offsetSet('froshShareBasketHash', $basketModel->getHash());
+
+        return $this->generateBasketUrl($basketId);
     }
 
     /**
