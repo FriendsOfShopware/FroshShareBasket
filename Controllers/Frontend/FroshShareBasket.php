@@ -44,12 +44,16 @@ class Shopware_Controllers_Frontend_FroshShareBasket extends Enlight_Controller_
             } elseif ($article->getMode() === 2) {
                 $basketModule->sAddVoucher($article->getOrdernumber());
             } else {
+                $attributes = PHP_MAJOR_VERSION >= 7 ? unserialize($article->getAttributes(), ['allowed_classes'=>false]) : unserialize($article->getAttributes());
+
+                if (!empty($attributes['swag_custom_products_configuration_hash'])) {
+                    $this->container->get('front')->Request()->setParam('customProductsHash', $attributes['swag_custom_products_configuration_hash']);
+                }
+
                 $this->container->get('events')->notify('FroshShareBasket_Controller_loadAction_addArticle_Start', ['article' => $article]);
                 $insertId = $basketModule->sAddArticle($article->getOrdernumber(), $article->getQuantity() ?: 1);
                 $insertId = $this->container->get('events')->filter('FroshShareBasket_Controller_loadAction_addArticle_Added', $insertId);
                 $this->updateBasketMode($article->getMode(), $insertId);
-
-                $attributes = PHP_MAJOR_VERSION >= 7 ? unserialize($article->getAttributes(), ['allowed_classes'=>false]) : unserialize($article->getAttributes());
 
                 foreach ($attributes as $attribute => $value) {
                     if ($value !== null) {
@@ -63,7 +67,6 @@ class Shopware_Controllers_Frontend_FroshShareBasket extends Enlight_Controller_
 
         $this->forward('cart', 'checkout', 'frontend', ['shareBasketState' => 'basketloaded']);
     }
-
 
     /**
      * @throws Exception
