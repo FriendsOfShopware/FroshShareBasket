@@ -166,8 +166,8 @@ class ShareBasketService implements ShareBasketServiceInterface
 
     /**
      * @param Basket $basketModel
-     * @param $basketId
-     * @param int $attempts
+     * @param string $basketId
+     * @param int    $attempts
      *
      * @throws \Exception
      *
