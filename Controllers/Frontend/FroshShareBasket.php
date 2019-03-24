@@ -61,6 +61,8 @@ class Shopware_Controllers_Frontend_FroshShareBasket extends Enlight_Controller_
                     }
                 }
             }
+
+            $this->container->get('front')->Request()->clearParams();
         }
 
         $this->container->get('session')->offsetSet('froshShareBasketHash', $basket->getHash());
