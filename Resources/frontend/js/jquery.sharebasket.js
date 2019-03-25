@@ -12,6 +12,11 @@
 
             new ClipboardJS('[data-clipboard-target]');
             me._on(me.opts.formSelector, 'submit', $.proxy(me.onSubmitForm, me));
+            me.initWebShare();
+        },
+
+        initWebShare: function () {
+            var me = this;
 
             if ($(me.opts.webShareButtonSelector).length && navigator.share !== undefined) {
                 $(me.opts.webShareButtonSelector).css('display', 'inline-block');
@@ -19,7 +24,7 @@
             }
         },
 
-        onClickWebShare: function(event){
+        onClickWebShare: function (event) {
             var $target = $(event.currentTarget);
 
             event.preventDefault();
@@ -50,6 +55,7 @@
                 success: function (response) {
                     form.remove();
                     responseContainer.empty().append(response).hide().fadeIn();
+                    me.initWebShare();
                     $.loadingIndicator.close();
                 }
             });
