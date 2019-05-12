@@ -15,3 +15,7 @@
 ## 1.1.2 (2019-03-24)
 
 - Add native sharing feature on supported devices.
+
+## 1.1.3 (2019-05-12)
+
+- Fix javascript error when extending backend statistics.
