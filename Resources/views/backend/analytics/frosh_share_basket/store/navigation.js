@@ -8,5 +8,5 @@
     comparable: false,
     leaf: true,
     multiShop: true
-}
+},
 // {/block}
