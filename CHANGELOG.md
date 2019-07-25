@@ -19,3 +19,8 @@
 ## 1.1.3 (2019-05-12)
 
 - Fix javascript error when extending backend statistics.
+
+## 1.1.4 (2019-07-25)
+
+- Update Facebook sharer URL.
+- Fix special characters in sharetext.
