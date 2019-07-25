@@ -18,6 +18,8 @@
 
         {/if}
 
+        {$shareText="{s name='sharetitle'}{/s} {$sShopname}"}
+
         <input type="text" class="is--small" id="sharebasket" data-clipboard-target="#sharebasket" readonly value="{$shareBasketUrl}">
 
         <div class="frosh-share-basket--buttons">
@@ -26,25 +28,25 @@
             </a>
             {if {config namespace=FroshShareBasket name=email}}
                 <a class="btn is--small is--center share-mail"
-                   href="mailto:%20?subject={s name='sharetitle'}{/s}%20{$sShopname}&body={$shareBasketUrl}">
+                   href="mailto:%20?subject={$shareText|escape:'url'}&body={$shareBasketUrl|escape:'url'}">
                     <i class="icon--mail"></i> {s name="email"}{/s}
                 </a>
             {/if}
             {if {config namespace=FroshShareBasket name=facebook}}
                 <a class="btn is--small is--center share-facebook" target="_blank"
-                   href="https://www.facebook.com/sharer/sharer.php?title={s name='sharetitle'}{/s} {$sShopname}&u={$shareBasketUrl}">
+                   href="https://www.facebook.com/sharer/sharer.php?quote={$shareText|escape:'url'}&u={$shareBasketUrl|escape:'url'}">
                     <i class="icon--facebook"></i> {s name="facebook"}{/s}
                 </a>
             {/if}
             {if {config namespace=FroshShareBasket name=whatsapp}}
                 <a class="btn is--small is--center share-whatsapp" target="_blank"
-                   href="https://api.whatsapp.com/send?text={s name='sharetitle'}{/s} {$sShopname} {$shareBasketUrl}">
+                   href="https://api.whatsapp.com/send?text={$shareText|escape:'url'}%20{$shareBasketUrl|escape:'url'}">
                     <i class="icon--share"></i> {s name="whatsapp"}{/s}
                 </a>
             {/if}
             {if {config namespace=FroshShareBasket name=webshare}}
                 <a class="btn is--small is--center share-webshare"
-                      data-share-title="{s name='sharetitle'}{/s} {$sShopname}"
+                      data-share-title="{$shareText}"
                       data-share-text=""
                       data-share-url="{$shareBasketUrl}">
                     <i class="icon--share"></i> {s name="webshare"}{/s}
