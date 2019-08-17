@@ -2,20 +2,25 @@
 
 namespace FroshShareBasket\Components;
 
+use Enlight_Controller_Request_RequestHttp;
+
 interface ShareBasketServiceInterface
 {
     /**
-     * @throws \Enlight_Exception
-     *
      * @return array
      */
-    public function prepareBasketData();
+    public function prepareBasketData(): array;
 
     /**
-     * @throws \Doctrine\ORM\OptimisticLockException
-     * @throws \Enlight_Exception
+     * @param string                                 $shareBasketId
+     * @param Enlight_Controller_Request_RequestHttp $request
      *
-     * @return string
+     * @return bool
+     */
+    public function loadBasket(string $shareBasketId, Enlight_Controller_Request_RequestHttp $request): bool;
+
+    /**
+     * @return bool|string
      */
     public function saveBasket();
 }
