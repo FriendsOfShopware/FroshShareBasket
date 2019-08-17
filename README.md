@@ -23,8 +23,10 @@ This plugin allows your customers to save the current basket and share it via li
 
 ## Requirements
 
-* min Shopware 5.5.0
-* min PHP 5.6
+| Version 	| Requirements               	|
+|---------	|----------------------------	|
+| 1.1     	| Min. Shopware 5.5, PHP 5.6 	|
+| 1.2     	| Min. Shopware 5.6, PHP 7.2 	|
 
 
 # Installation
