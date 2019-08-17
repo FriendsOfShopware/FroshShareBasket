@@ -1,4 +1,5 @@
 {namespace name="frontend/share_basket/checkout/cart"}
+
 {extends file="parent:frontend/checkout/cart.tpl"}
 
 {block name='frontend_checkout_actions_checkout'}
