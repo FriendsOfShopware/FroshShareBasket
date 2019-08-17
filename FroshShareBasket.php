@@ -3,11 +3,12 @@
 namespace FroshShareBasket;
 
 use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\DBALException;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Tools\SchemaTool;
 use FroshShareBasket\Bootstrap\Updater;
-use FroshShareBasket\Models\Article;
-use FroshShareBasket\Models\Basket;
+use FroshShareBasket\Models\ShareBasket;
+use FroshShareBasket\Models\ShareBasketArticle;
 use Shopware\Components\Model\ModelManager;
 use Shopware\Components\Plugin;
 use Shopware\Components\Plugin\Context\ActivateContext;
@@ -29,7 +30,7 @@ class FroshShareBasket extends Plugin
     /**
      * @param UpdateContext $context
      *
-     * @throws \Doctrine\DBAL\DBALException
+     * @throws DBALException
      */
     public function update(UpdateContext $context)
     {
@@ -96,8 +97,8 @@ class FroshShareBasket extends Plugin
         $tool = new SchemaTool($em);
 
         $tool->updateSchema([
-            $em->getClassMetadata(Article::class),
-            $em->getClassMetadata(Basket::class),
+            $em->getClassMetadata(ShareBasketArticle::class),
+            $em->getClassMetadata(ShareBasket::class),
         ], true);
     }
 
@@ -112,8 +113,8 @@ class FroshShareBasket extends Plugin
         $tool = new SchemaTool($em);
 
         $tool->dropSchema([
-            $em->getClassMetadata(Article::class),
-            $em->getClassMetadata(Basket::class),
+            $em->getClassMetadata(ShareBasketArticle::class),
+            $em->getClassMetadata(ShareBasket::class),
         ]);
     }
 }

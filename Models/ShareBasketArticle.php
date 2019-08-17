@@ -13,14 +13,14 @@ use Shopware\Components\Model\ModelEntity;
  *      }
  * )
  */
-class Article extends ModelEntity
+class ShareBasketArticle extends ModelEntity
 {
     /**
-     * @var Basket
-     * @ORM\ManyToOne(targetEntity="FroshShareBasket\Models\Basket", inversedBy="articles")
+     * @var ShareBasket
+     * @ORM\ManyToOne(targetEntity="FroshShareBasket\Models\ShareBasket", inversedBy="articles")
      * @ORM\JoinColumn(name="share_basket_id", referencedColumnName="id")
      */
-    protected $basket;
+    protected $shareBasket;
 
     /**
      * Unique identifier
@@ -51,39 +51,39 @@ class Article extends ModelEntity
     private $mode = 0;
 
     /**
-     * @var string
+     * @var string|null
      * @ORM\Column(name="attributes", type="text", nullable=true)
      */
     private $attributes;
 
     /**
+     * @return ShareBasket
+     */
+    public function getShareBasket(): ShareBasket
+    {
+        return $this->shareBasket;
+    }
+
+    /**
+     * @param ShareBasket $shareBasket
+     */
+    public function setShareBasket(ShareBasket $shareBasket): void
+    {
+        $this->shareBasket = $shareBasket;
+    }
+
+    /**
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
     /**
-     * @return Basket
-     */
-    public function getBasket()
-    {
-        return $this->basket;
-    }
-
-    /**
-     * @param Basket $basket
-     */
-    public function setBasket($basket)
-    {
-        $this->basket = $basket;
-    }
-
-    /**
      * @return string
      */
-    public function getOrdernumber()
+    public function getOrdernumber(): string
     {
         return $this->ordernumber;
     }
@@ -91,7 +91,7 @@ class Article extends ModelEntity
     /**
      * @param string $ordernumber
      */
-    public function setOrdernumber($ordernumber)
+    public function setOrdernumber(string $ordernumber): void
     {
         $this->ordernumber = $ordernumber;
     }
@@ -99,7 +99,7 @@ class Article extends ModelEntity
     /**
      * @return int
      */
-    public function getQuantity()
+    public function getQuantity(): int
     {
         return $this->quantity;
     }
@@ -107,7 +107,7 @@ class Article extends ModelEntity
     /**
      * @param int $quantity
      */
-    public function setQuantity($quantity)
+    public function setQuantity(int $quantity): void
     {
         $this->quantity = $quantity;
     }
@@ -115,7 +115,7 @@ class Article extends ModelEntity
     /**
      * @return int
      */
-    public function getMode()
+    public function getMode(): int
     {
         return $this->mode;
     }
@@ -123,23 +123,23 @@ class Article extends ModelEntity
     /**
      * @param int $mode
      */
-    public function setMode($mode)
+    public function setMode(int $mode): void
     {
         $this->mode = $mode;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getAttributes()
+    public function getAttributes(): ?string
     {
         return $this->attributes;
     }
 
     /**
-     * @param string $attributes
+     * @param string|null $attributes
      */
-    public function setAttributes($attributes)
+    public function setAttributes(?string $attributes): void
     {
         $this->attributes = $attributes;
     }
