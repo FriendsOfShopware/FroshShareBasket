@@ -24,3 +24,8 @@
 
 - Update Facebook sharer URL.
 - Fix special characters in sharetext.
+
+## 1.2.0 (2019-XX-XX)
+
+- ...
+- ...
