@@ -1,11 +1,37 @@
 <?php
 
-class Shopware_Controllers_Backend_FroshShareBasket extends Shopware_Controllers_Backend_ExtJs
+namespace FroshShareBasket\Controller\Backend;
+
+use DateInterval;
+use DateTime;
+use Doctrine\DBAL\Connection;
+use Exception;
+use Shopware_Controllers_Backend_ExtJs;
+
+class FroshShareBasket extends Shopware_Controllers_Backend_ExtJs
 {
+    /**
+     * @var Connection;
+     */
+    private $connection;
+
+    /**
+     * FroshShareBasket constructor.
+     *
+     * @param Connection $connection
+     */
+    public function __construct(Connection $connection)
+    {
+        $this->connection = $connection;
+        parent::__construct();
+    }
+
+    /**
+     * @throws Exception
+     */
     public function getStatisticsAction()
     {
-        $connection = $this->container->get('dbal_connection');
-        $query = $connection->createQueryBuilder();
+        $query = $this->connection->createQueryBuilder();
         $query->select(
                 [
                     'articles.ordernumber as ordernumber',
@@ -27,16 +53,16 @@ class Shopware_Controllers_Backend_FroshShareBasket extends Shopware_Controllers
             $selectedShopIds = explode(',', $idList);
 
             foreach ($selectedShopIds as $shopId) {
-                $query->addSelect('SUM(IF(baskets.shop_id = ' . $connection->quote($shopId) . ', 1, 0) * save_count)  as total_count' . $shopId);
-                $query->addSelect('SUM(IF(baskets.shop_id = ' . $connection->quote($shopId) . ', articles.quantity, 0) * save_count)  as total_quantity' . $shopId);
+                $query->addSelect('SUM(IF(baskets.shop_id = ' . $this->connection->quote($shopId) . ', 1, 0) * save_count)  as total_count' . $shopId);
+                $query->addSelect('SUM(IF(baskets.shop_id = ' . $this->connection->quote($shopId) . ', articles.quantity, 0) * save_count)  as total_quantity' . $shopId);
             }
         }
 
-        if ($this->getFromDate() instanceof \DateTime) {
+        if ($this->getFromDate() instanceof DateTime) {
             $query->andWhere('created >= :fromDate')
                 ->setParameter('fromDate', $this->getFromDate()->format('Y-m-d H:i:s'));
         }
-        if ($this->getToDate() instanceof \DateTime) {
+        if ($this->getToDate() instanceof DateTime) {
             $query->andWhere('created <= :toDate')
                 ->setParameter('toDate', $this->getToDate()->format('Y-m-d H:i:s'));
         }
@@ -72,16 +98,16 @@ class Shopware_Controllers_Backend_FroshShareBasket extends Shopware_Controllers
     /**
      * @throws Exception
      *
-     * @return DateTime|mixed
+     * @return DateTime|mixed|null
      */
     private function getFromDate()
     {
         $fromDate = $this->Request()->getParam('fromDate');
         if (empty($fromDate)) {
-            $fromDate = new \DateTime();
+            $fromDate = new DateTime();
             $fromDate = $fromDate->sub(new DateInterval('P1M'));
         } else {
-            $fromDate = new \DateTime($fromDate);
+            $fromDate = new DateTime($fromDate);
         }
 
         return $fromDate;
@@ -90,16 +116,16 @@ class Shopware_Controllers_Backend_FroshShareBasket extends Shopware_Controllers
     /**
      * @throws Exception
      *
-     * @return DateTime|mixed
+     * @return DateTime|mixed|null
      */
     private function getToDate()
     {
         //if a to date passed, format it over the \DateTime object. Otherwise create a new date with today
         $toDate = $this->Request()->getParam('toDate');
         if (empty($toDate)) {
-            $toDate = new \DateTime();
+            $toDate = new DateTime();
         } else {
-            $toDate = new \DateTime($toDate);
+            $toDate = new DateTime($toDate);
         }
         //to get the right value cause 2012-02-02 is smaller than 2012-02-02 15:33:12
         $toDate = $toDate->add(new DateInterval('P1D'));

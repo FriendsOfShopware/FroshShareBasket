@@ -20,8 +20,20 @@
             <argument id="session" type="service"/>
             <argument id="models" type="service"/>
             <argument id="dbal_connection" type="service"/>
+            <argument id="db" type="service"/>
             <argument id="router" type="service"/>
             <argument id="shopware_storefront.context_service" type="service"/>
+            <argument id="events" type="service"/>
+        </service>
+
+        <service class="FroshShareBasket\Controller\Frontend\FroshShareBasket" id="frosh_share_basket.controller.frontend.frosh_share_basket">
+            <argument id="frosh_share_basket.components.share_basket_service" type="service"/>
+            <tag name="shopware.controller" module="frontend" controller="FroshShareBasket"/>
+        </service>
+
+        <service class="FroshShareBasket\Controller\Backend\FroshShareBasket" id="frosh_share_basket.controller.backend.frosh_share_basket">
+            <argument id="dbal_connection" type="service"/>
+            <tag name="shopware.controller" module="backend" controller="FroshShareBasket"/>
         </service>
 
         <service class="FroshShareBasket\Subscriber\Analytics" id="frosh_share_basket.subscriber.analytics">
