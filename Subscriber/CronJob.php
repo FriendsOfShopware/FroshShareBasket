@@ -49,7 +49,8 @@ class CronJob implements SubscriberInterface
     public function cleanup(\Shopware_Components_Cron_CronJob $job)
     {
         $statement = $this->connection
-            ->prepare('DELETE 
+            ->prepare('SET FOREIGN_KEY_CHECKS = 0;
+              DELETE 
                   baskets, urls, articles
               FROM
                   s_plugin_sharebasket_baskets AS baskets 
@@ -58,7 +59,8 @@ class CronJob implements SubscriberInterface
               LEFT JOIN 
                   s_core_rewrite_urls AS urls ON (urls.org_path = concat(:path,baskets.basket_id))
               WHERE
-                  created < DATE_SUB(NOW(), INTERVAL :interval MONTH)
+                  created < DATE_SUB(NOW(), INTERVAL :interval MONTH);
+              SET FOREIGN_KEY_CHECKS = 1;
         ');
 
         $path = 'sViewport=FroshShareBasket&sAction=load&bID=';
