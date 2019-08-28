@@ -24,3 +24,7 @@
 
 - Update Facebook sharer URL.
 - Fix special characters in sharetext.
+
+## 1.1.5 (2019-08-28)
+
+- Fix cleanup cronjob.
