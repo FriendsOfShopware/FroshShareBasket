@@ -2,7 +2,7 @@
 
 [![Join the chat at https://gitter.im/FriendsOfShopware/Lobby](https://badges.gitter.im/FriendsOfShopware/Lobby.svg)](https://gitter.im/FriendsOfShopware/Lobby)
 [![Travis CI](https://travis-ci.org/FriendsOfShopware/FroshShareBasket.svg?branch=master)](https://travis-ci.org/FriendsOfShopware/FroshShareBasket)
-[![Download @ Community Store](https://img.shields.io/badge/endpoint.svg?url=https://api.friendsofshopware.de/FroshShareBasket)](https://store.shopware.com/en/frosh90441580534f/share-basket.html)
+[![Download @ Community Store](https://img.shields.io/badge/endpoint.svg?url=https://api.friendsofshopware.com/FroshShareBasket)](https://store.shopware.com/en/frosh90441580534f/share-basket.html)
 
 
 This plugin allows your customers to save the current basket and share it via link.
