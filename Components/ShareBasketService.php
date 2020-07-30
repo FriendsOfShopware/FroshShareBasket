@@ -91,6 +91,10 @@ class ShareBasketService implements ShareBasketServiceInterface
 
         $data = [];
         foreach ($BasketData['content'] as $key => $article) {
+            if (in_array($article['modus'], ['3', '4'], true)) {
+                continue;
+            }
+
             if ($article['modus'] === '2') {
                 $voucher = $basketModule->sGetVoucher();
                 $article['ordernumber'] = $voucher['code'];

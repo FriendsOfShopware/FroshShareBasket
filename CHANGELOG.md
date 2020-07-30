@@ -28,3 +28,7 @@
 ## 1.1.5 (2019-08-28)
 
 - Fix cleanup cronjob.
+
+## 1.1.6 (2020-07-30)
+
+- Avoid storing of article mode 3 & 4
