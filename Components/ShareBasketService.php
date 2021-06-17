@@ -106,9 +106,11 @@ class ShareBasketService implements ShareBasketServiceInterface
                 'mode' => $article['modus'],
             ];
 
-            foreach ($this->getBasketAttributes($article['id']) as $attribute => $value) {
-                if ($value && in_array($attribute, $attributesToStore, false)) {
-                    $basketArticle['attributes'][$attribute] = $value;
+            if (is_array($attributesToStore) && count($attributesToStore)) {
+                foreach ($this->getBasketAttributes($article['id']) as $attribute => $value) {
+                    if ($value && in_array($attribute, $attributesToStore, false)) {
+                        $basketArticle['attributes'][$attribute] = $value;
+                    }
                 }
             }
 

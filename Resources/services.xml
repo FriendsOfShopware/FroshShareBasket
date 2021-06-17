@@ -8,7 +8,7 @@
     </parameters>
 
     <services>
-
+        <defaults public="true"/>
         <service class="Shopware\Components\Plugin\CachedConfigReader" id="frosh_share_basket.config" >
             <factory service="shopware.plugin.cached_config_reader" method="getByPluginName"/>
             <argument type="string">FroshShareBasket</argument>
