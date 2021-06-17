@@ -14,18 +14,18 @@ Ext.define('Shopware.apps.Analytics.froshShareBasket.view.table.FroshShareBasket
                 sortable: true
             }
         };
-        
+
         me.initShopColumns([
             {
                 dataIndex: 'total_count',
-                text: '{s name=frosh_share_basket/savecount}Saved{/s}: [0]',
+                text: '{s name="frosh_share_basket/savecount"}Saved{/s}: [0]',
                 renderer: function (val) {
                     return val + 'x';
                 }
             },
             {
                 dataIndex: 'total_quantity',
-                text: '{s name=frosh_share_basket/quantity}Quantity{/s}: [0]'
+                text: '{s name="frosh_share_basket/quantity"}Quantity{/s}: [0]'
             },
         ]);
 
@@ -37,7 +37,7 @@ Ext.define('Shopware.apps.Analytics.froshShareBasket.view.table.FroshShareBasket
             {
                 xtype: 'actioncolumn',
                 dataIndex: 'ordernumber',
-                text: '{s name=frosh_share_basket/ordernumber}Ordernumber{/s}',
+                text: '{s name="frosh_share_basket/ordernumber"}Ordernumber{/s}',
                 renderer: function (val) {
                     return val;
                 },
@@ -45,7 +45,7 @@ Ext.define('Shopware.apps.Analytics.froshShareBasket.view.table.FroshShareBasket
                     {
                         iconCls: 'sprite-pencil',
                         cls: 'editBtn',
-                        tooltip: '{s name=table/article_impression/action_column/edit}Edit this Article{/s}',
+                        tooltip: '{s name="table/article_impression/action_column/edit"}Edit this Article{/s}',
                         handler: function (view, rowIndex, colIndex, item, event, record) {
                             openNewModule('Shopware.apps.Article', {
                                 action: 'detail',
@@ -59,18 +59,18 @@ Ext.define('Shopware.apps.Analytics.froshShareBasket.view.table.FroshShareBasket
             },
             {
                 dataIndex: 'name',
-                text: '{s name=frosh_share_basket/article}Article{/s}'
+                text: '{s name="frosh_share_basket/article"}Article{/s}'
             },
             {
                 dataIndex: 'total_count',
-                text: '{s name=frosh_share_basket/savecount}Saved{/s}',
+                text: '{s name="frosh_share_basket/savecount"}Saved{/s}',
                 renderer: function (val) {
                     return val + 'x';
                 },
             },
             {
                 dataIndex: 'total_quantity',
-                text: '{s name=frosh_share_basket/quantity}Quantity{/s}'
+                text: '{s name="frosh_share_basket/quantity"}Quantity{/s}'
             }
         ];
     }

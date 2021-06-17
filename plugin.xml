@@ -4,12 +4,17 @@
     <label lang="de">Warenkorb teilen</label>
     <label lang="en">Share basket</label>
 
-    <version>1.1.7</version>
+    <version>1.1.8</version>
     <copyright>Friends of Shopware</copyright>
     <license>MIT</license>
     <link>https://friendsofshopware.github.io/</link>
     <author>Friends of Shopware</author>
     <compatibility minVersion="5.6.0" />
+
+    <changelog version="1.1.8">
+        <changes lang="de">Shopware 5.7 Support</changes>
+        <changes lang="en">Shopware 5.7 Support</changes>
+    </changelog>
 
     <changelog version="1.1.7">
         <changes lang="de">Shopware 5.7 Support</changes>
